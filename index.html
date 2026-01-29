@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>小隨身帳本</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app-container">
+        <h1>🏠 家庭小帳本</h1>
+        
+        <div class="input-group">
+            <input type="text" id="desc" placeholder="買了什麼？">
+            <input type="number" id="amount" placeholder="多少錢？">
+            <button id="add-btn">新增紀錄</button>
+        </div>
+
+        <div class="history-section">
+            <h3>最近支出</h3>
+            <div id="list"></div>
+        </div>
+
+        <button id="export-btn" class="secondary">匯出報表 (CSV)</button>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

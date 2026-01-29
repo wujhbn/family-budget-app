@@ -1,0 +1,150 @@
+// 1. 宣告區：選取 HTML 元素
+const descInput = document.getElementById('desc');
+const amountInput = document.getElementById('amount');
+const addBtn = document.getElementById('add-btn');
+const exportBtn = document.getElementById('export-btn');
+const listDiv = document.getElementById('list');
+const totalAmountSpan = document.getElementById('total-amount'); // 如果 HTML 有這個元素
+
+// 2. 互動區：設定按鈕指令
+addBtn.addEventListener('click', () => {
+    const desc = descInput.value.trim();
+    const amount = amountInput.value.trim();
+    
+    // 檢查是否有輸入
+    if (!desc || !amount) {
+        alert('請輸入項目與金額！');
+        return;
+    }
+    
+    // 檢查金額是否為有效數字
+    if (isNaN(amount) || parseFloat(amount) <= 0) {
+        alert('請輸入有效的金額（大於 0 的數字）！');
+        return;
+    }
+    
+    addRecord(desc, amount);
+    descInput.value = '';
+    amountInput.value = '';
+});
+
+// 當點擊匯出按鈕時執行
+exportBtn.addEventListener('click', exportToCSV);
+
+// 3. 邏輯區：處理資料存取
+
+// 取得格式化的日期（統一格式：YYYY/MM/DD）
+function getFormattedDate() {
+    const now = new Date();
+    const year = now.getFullYear();
+    const month = String(now.getMonth() + 1).padStart(2, '0');
+    const day = String(now.getDate()).padStart(2, '0');
+    return `${year}/${month}/${day}`;
+}
+
+function addRecord(desc, amount) {
+    const history = JSON.parse(localStorage.getItem('myAccounts')) || [];
+    
+    const newEntry = {
+        desc: desc,
+        amount: parseFloat(amount),
+        date: getFormattedDate() // 使用統一的日期格式
+    };
+    
+    history.push(newEntry);
+    localStorage.setItem('myAccounts', JSON.stringify(history));
+    renderHistory();
+}
+
+// 匯出報表的功能 📊
+function exportToCSV() {
+    const history = JSON.parse(localStorage.getItem('myAccounts')) || [];
+    
+    if (history.length === 0) {
+        alert("目前沒有紀錄可以匯出喔！");
+        return;
+    }
+    
+    // \uFEFF 是為了讓 Excel 正確讀取中文（BOM 標記）
+    let csvContent = "\uFEFF日期,項目,金額\n";
+    
+    history.forEach(item => {
+        // 處理項目描述中可能包含的逗號和雙引號
+        const safeDesc = `"${item.desc.replace(/"/g, '""')}"`;
+        csvContent += `${item.date},${safeDesc},${item.amount}\n`;
+    });
+    
+    // 建立下載連結
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = `家庭帳本_${getFormattedDate().replace(/\//g, '')}.csv`;
+    link.click();
+    
+    // 釋放記憶體
+    URL.revokeObjectURL(url);
+}
+
+// 4. 畫面區：顯示歷史紀錄
+function renderHistory() {
+    const history = JSON.parse(localStorage.getItem('myAccounts')) || [];
+    
+    listDiv.innerHTML = '';
+    
+    // 計算總金額
+    let total = 0;
+    
+    // 如果沒有紀錄，顯示提示訊息
+    if (history.length === 0) {
+        listDiv.innerHTML = '<p style="color: #999; text-align: center;">尚無任何紀錄</p>';
+        // 更新總金額為 0（如果有這個元素）
+        if (totalAmountSpan) {
+            totalAmountSpan.textContent = '0';
+        }
+        return;
+    }
+    
+    history.forEach((entry) => {
+        total += entry.amount; // 累加總金額
+        
+        const recordDiv = document.createElement('div');
+        recordDiv.className = 'record-item';
+        
+        // 格式化金額顯示（加上千分位逗號）
+        const formattedAmount = entry.amount.toLocaleString('zh-TW', {
+            minimumFractionDigits: 0,
+            maximumFractionDigits: 2
+        });
+        
+        recordDiv.innerHTML = `
+            <span>${entry.date} - ${entry.desc}</span>
+            <strong>$${formattedAmount}</strong>
+        `;
+        listDiv.appendChild(recordDiv);
+    });
+    
+    // 更新總金額顯示（如果有這個元素）
+    if (totalAmountSpan) {
+        totalAmountSpan.textContent = total.toLocaleString('zh-TW', {
+            minimumFractionDigits: 0,
+            maximumFractionDigits: 2
+        });
+    }
+}
+
+// 5. 啟動區
+window.onload = renderHistory;
+
+// Service Worker 註冊（PWA 支援）
+if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js') // 使用絕對路徑更可靠
+            .then((registration) => {
+                console.log('守衛已就位！🛡️', registration.scope);
+            })
+            .catch((err) => {
+                console.error('守衛啟動失敗：', err);
+            });
+    });
+}

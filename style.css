@@ -1,0 +1,70 @@
+/* 基本設定：深色背景與亮色文字 */
+body {
+    background-color: #121212;
+    color: #e0e0e0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+}
+
+.app-container {
+    width: 100%;
+    max-width: 500px;
+}
+
+h1 {
+    color: #03dac6; /* 霓虹綠色標題 */
+    text-align: center;
+}
+
+/* 輸入框設計：讓它在手機上容易點擊 */
+input {
+    width: 100%;
+    padding: 15px;
+    margin-bottom: 10px;
+    background-color: #1e1e1e;
+    border: 1px solid #333;
+    border-radius: 8px;
+    color: white;
+    font-size: 16px; /* 至少 16px 避免 iOS 自動放大螢幕 */
+    box-sizing: border-box;
+}
+
+/* 按鈕設計：寬度 100% 方便單手操作 */
+button {
+    width: 100%;
+    padding: 15px;
+    border: none;
+    border-radius: 8px;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+    background-color: #bb86fc; /* 亮紫色主按鈕 */
+    color: #000;
+}
+
+button:active {
+    transform: scale(0.98); /* 點擊時的縮小回饋 */
+}
+
+/* 歷史紀錄清單：卡片式設計 */
+.record-item {
+    background-color: #1e1e1e;
+    padding: 15px;
+    margin-top: 10px;
+    border-radius: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-left: 4px solid #03dac6;
+}
+
+.secondary {
+    background-color: transparent;
+    color: #bb86fc;
+    border: 2px solid #bb86fc;
+    margin-top: 20px;
+}
