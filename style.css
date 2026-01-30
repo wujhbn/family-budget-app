@@ -210,16 +210,16 @@ h1 {
     cursor: pointer;
     transition: all 0.3s ease;
     
-    width: 30px;
-    height: 30px;
-    min-width: 30px;
-    min-height: 30px;
+    width: 36px;
+    height: 36px;
+    min-width: 36px;
+    min-height: 36px;
     
     display: flex;
     align-items: center;
     justify-content: center;
     
-    font-size: 18px;
+    font-size: 1em;
     line-height: 1;
     font-weight: 300;
     font-family: Arial, sans-serif;
@@ -379,3 +379,4 @@ h1 {
 [  金額輸入框  ]
 
 [  新增紀錄按鈕  ]
+
