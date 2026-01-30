@@ -1,21 +1,57 @@
+/* 基本樣式建議 */
+.summary-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 0;
+    border-bottom: 2px solid #e0e0e0;
+    margin-bottom: 15px;
+}
+
+.summary-header h3 {
+    margin: 0;
+    font-size: 1.1em;
+}
+
+.total-display {
+    color: #4CAF50;
+    font-weight: bold;
+}
+
+#total-amount {
+    color: #2196F3;
+}
+
+.history-section {
+    margin: 20px 0;
+    min-height: 200px;
+}
+
+#list {
+    max-height: 400px;
+    overflow-y: auto;
+}
+
 .record-item {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 10px;
+    padding: 12px;
     margin: 8px 0;
     background: #f9f9f9;
     border-radius: 5px;
+    border-left: 3px solid #4CAF50;
 }
 
 .delete-btn {
     background: #f44336;
     color: white;
     border: none;
-    padding: 5px 15px;
-    border-radius: 3px;
+    padding: 6px 15px;
+    border-radius: 4px;
     cursor: pointer;
     font-size: 0.9em;
+    transition: background 0.3s;
 }
 
 .delete-btn:hover {
