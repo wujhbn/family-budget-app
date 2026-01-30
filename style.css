@@ -1,132 +1,23 @@
-/* 刪除按鈕 - 使用減號圖示 */
-.delete-btn {
-    background: #f44336;
-    color: white;
-    border: none;
-    border-radius: 50%; /* 圓形按鈕 */
-    cursor: pointer;
-    transition: all 0.3s ease;
-    
-    /* 固定尺寸 - 正方形 */
-    width: 36px;
-    height: 36px;
-    min-width: 36px;
-    min-height: 36px;
-    
-    /* 置中對齊 */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    
-    /* 字體設定 */
-    font-size: 24px;
-    line-height: 1;
-    font-weight: 300; /* 細一點的線條 */
-    font-family: Arial, sans-serif; /* 確保減號在所有裝置上顯示一致 */
-    
-    /* 防止縮放 */
-    flex-shrink: 0;
-    
-    /* 移除預設樣式 */
-    padding: 0;
-    margin: 0;
-    
-    /* 移除手機點擊時的藍色外框 */
-    -webkit-tap-highlight-color: transparent;
-    outline: none;
-    
-    /* 陰影效果 */
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    
-    /* 防止使用者選取文字 */
-    user-select: none;
-    -webkit-user-select: none;
-}
-
-.delete-btn:hover {
-    background: #d32f2f;
-    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
-    transform: scale(1.05);
-}
-
-.delete-btn:active {
-    background: #c62828;
-    transform: scale(0.95);
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
-}
-
-/* 手機優化 */
-@media (max-width: 768px) {
-    .delete-btn {
-        width: 40px;
-        height: 40px;
-        min-width: 40px;
-        min-height: 40px;
-        font-size: 26px; /* 手機上稍微大一點，方便點擊 */
-    }
-}
-
-/* 小螢幕手機 */
-@media (max-width: 375px) {
-    .delete-btn {
-        width: 38px;
-        height: 38px;
-        min-width: 38px;
-        min-height: 38px;
-        font-size: 24px;
-    }
-}
-
-/* 紀錄項目容器 */
 .record-item {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 12px;
+    padding: 10px;
     margin: 8px 0;
     background: #f9f9f9;
     border-radius: 5px;
-    border-left: 3px solid #4CAF50;
-    gap: 12px; /* 元素之間的間距 */
-    transition: background 0.2s ease; /* 加入過渡效果 */
 }
 
-/* 滑鼠移到項目上時的效果（選用） */
-.record-item:hover {
-    background: #f0f0f0;
+.delete-btn {
+    background: #f44336;
+    color: white;
+    border: none;
+    padding: 5px 15px;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 0.9em;
 }
 
-.record-item > div {
-    flex: 1;
-    min-width: 0; /* 防止文字溢出 */
-}
-
-.record-item span {
-    display: block;
-    color: #333;
-    font-size: 0.95em;
-}
-
-.record-item strong {
-    display: block;
-    margin-top: 4px;
-    font-size: 1.1em;
-    color: #2196F3;
-    font-weight: 600; /* 加強粗體 */
-}
-
-/* 手機上的紀錄項目優化 */
-@media (max-width: 768px) {
-    .record-item {
-        padding: 10px;
-        gap: 10px;
-    }
-    
-    .record-item span {
-        font-size: 0.9em;
-    }
-    
-    .record-item strong {
-        font-size: 1.05em;
-    }
+.delete-btn:hover {
+    background: #d32f2f;
 }
