@@ -68,3 +68,45 @@ button:active {
     border: 2px solid #bb86fc;
     margin-top: 20px;
 }
+
+/* 讓紀錄項目的內容與按鈕並排 */
+.record-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* 刪除按鈕樣式 */
+.delete-btn {
+    width: auto; /* 不要像主按鈕那麼寬 */
+    padding: 5px 12px;
+    font-size: 14px;
+    background-color: #cf6679; /* 暗紅色，代表警告或刪除 */
+    color: white;
+    margin-left: 10px;
+}
+
+/* 讓標題與總金額並排顯示 */
+.summary-header {
+    display: flex;
+    justify-content: space-between; /* 一左一右 */
+    align-items: center;
+    margin-bottom: 10px;
+    border-bottom: 2px solid #333; /* 加一條分隔線 */
+    padding-bottom: 10px;
+}
+
+.history-section h3 {
+    margin: 0; /* 移除預設邊距 */
+}
+
+/* 總金額的特別樣式 */
+.total-display {
+    color: #cf6679; /* 讓總支出呈現顯眼的紅色，提醒自己花多少 */
+    /* 或者你想用收入的綠色： color: #03dac6; */
+}
+
+#total-amount {
+    font-size: 1.2em; /* 數字再大一點 */
+    font-weight: bold;
+}

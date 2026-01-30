@@ -3,25 +3,48 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#4CAF50">
+    <meta name="description" content="簡單好用的家庭記帳本">
     <title>小隨身帳本</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="manifest" href="manifest.json">
+    <link rel="icon" type="image/png" href="icon.png">
 </head>
 <body>
     <div class="app-container">
         <h1>🏠 家庭小帳本</h1>
         
         <div class="input-group">
-            <input type="text" id="desc" placeholder="買了什麼？">
-            <input type="number" id="amount" placeholder="多少錢？">
-            <button id="add-btn">新增紀錄</button>
+            <input 
+                type="text" 
+                id="desc" 
+                placeholder="買了什麼？"
+                maxlength="50"
+                autocomplete="off"
+                required
+            >
+            <input 
+                type="number" 
+                id="amount" 
+                placeholder="多少錢？"
+                min="0"
+                step="0.01"
+                autocomplete="off"
+                required
+            >
+            <button type="button" id="add-btn">新增紀錄</button>
         </div>
 
         <div class="history-section">
-            <h3>最近支出</h3>
+            <div class="summary-header">
+                <h3>最近支出</h3>
+                <h3 class="total-display">總計: $<span id="total-amount">0</span></h3>
+            </div>
+            
             <div id="list"></div>
         </div>
 
-        <button id="export-btn" class="secondary">匯出報表 (CSV)</button>
+        <button type="button" id="export-btn" class="secondary">匯出報表 (CSV)</button>
     </div>
 
     <script src="script.js"></script>

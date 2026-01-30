@@ -4,7 +4,7 @@ const amountInput = document.getElementById('amount');
 const addBtn = document.getElementById('add-btn');
 const exportBtn = document.getElementById('export-btn');
 const listDiv = document.getElementById('list');
-const totalAmountSpan = document.getElementById('total-amount'); // 如果 HTML 有這個元素
+const totalAmountSpan = document.getElementById('total-amount');
 
 // 2. 互動區：設定按鈕指令
 addBtn.addEventListener('click', () => {
@@ -48,11 +48,29 @@ function addRecord(desc, amount) {
     const newEntry = {
         desc: desc,
         amount: parseFloat(amount),
-        date: getFormattedDate() // 使用統一的日期格式
+        date: getFormattedDate()
     };
     
     history.push(newEntry);
     localStorage.setItem('myAccounts', JSON.stringify(history));
+    renderHistory();
+}
+
+// 刪除紀錄功能
+function deleteRecord(index) {
+    // 彈出視窗確認，避免手滑
+    if (!confirm("確定要刪除這筆紀錄嗎？")) return;
+
+    // 1. 取出資料
+    const history = JSON.parse(localStorage.getItem('myAccounts')) || [];
+    
+    // 2. 刪除陣列中指定位置的資料
+    history.splice(index, 1);
+    
+    // 3. 存回 localStorage
+    localStorage.setItem('myAccounts', JSON.stringify(history));
+    
+    // 4. 重新渲染畫面
     renderHistory();
 }
 
@@ -98,15 +116,16 @@ function renderHistory() {
     // 如果沒有紀錄，顯示提示訊息
     if (history.length === 0) {
         listDiv.innerHTML = '<p style="color: #999; text-align: center;">尚無任何紀錄</p>';
-        // 更新總金額為 0（如果有這個元素）
+        // 更新總金額為 0
         if (totalAmountSpan) {
             totalAmountSpan.textContent = '0';
         }
         return;
     }
     
-    history.forEach((entry) => {
-        total += entry.amount; // 累加總金額
+    history.forEach((entry, index) => {
+        // 累加總金額
+        total += parseFloat(entry.amount);
         
         const recordDiv = document.createElement('div');
         recordDiv.className = 'record-item';
@@ -118,13 +137,24 @@ function renderHistory() {
         });
         
         recordDiv.innerHTML = `
-            <span>${entry.date} - ${entry.desc}</span>
-            <strong>$${formattedAmount}</strong>
+            <div>
+                <span>${entry.date} - ${entry.desc}</span>
+                <br>
+                <strong>$${formattedAmount}</strong>
+            </div>
         `;
+        
+        // 建立刪除按鈕（使用事件監聽器而非內聯事件）
+        const deleteBtn = document.createElement('button');
+        deleteBtn.className = 'delete-btn';
+        deleteBtn.textContent = '刪除';
+        deleteBtn.addEventListener('click', () => deleteRecord(index));
+        
+        recordDiv.appendChild(deleteBtn);
         listDiv.appendChild(recordDiv);
     });
     
-    // 更新總金額顯示（如果有這個元素）
+    // 更新總金額顯示
     if (totalAmountSpan) {
         totalAmountSpan.textContent = total.toLocaleString('zh-TW', {
             minimumFractionDigits: 0,
@@ -134,17 +164,18 @@ function renderHistory() {
 }
 
 // 5. 啟動區
-window.onload = renderHistory;
-
-// Service Worker 註冊（PWA 支援）
-if ('serviceWorker' in navigator) {
-    window.addEventListener('load', () => {
-        navigator.serviceWorker.register('/sw.js') // 使用絕對路徑更可靠
+window.addEventListener('load', () => {
+    // 渲染歷史紀錄
+    renderHistory();
+    
+    // Service Worker 註冊（PWA 支援）
+    if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('/sw.js')
             .then((registration) => {
                 console.log('守衛已就位！🛡️', registration.scope);
             })
             .catch((err) => {
                 console.error('守衛啟動失敗：', err);
             });
-    });
-}
+    }
+});

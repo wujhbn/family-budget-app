@@ -1,22 +1,21 @@
-const CACHE_NAME = 'budget-app-v1';
-const ASSETS = [
-  './',
-  './index.html',
-  './style.css',
-  './script.js',
-  './manifest.json'
+const CACHE_NAME = 'account-book-v1';
+const urlsToCache = [
+  '/',
+  '/style.css',
+  '/script.js',
+  '/icon.png'
 ];
 
-// 安裝守衛並快取檔案 📦
-self.addEventListener('install', (e) => {
-  e.waitUntil(
-    caches.open(CACHE_NAME).then((cache) => cache.addAll(ASSETS))
+self.addEventListener('install', (event) => {
+  event.waitUntil(
+    caches.open(CACHE_NAME)
+      .then((cache) => cache.addAll(urlsToCache))
   );
 });
 
-// 攔截請求，優先從快取讀取 ⚡
-self.addEventListener('fetch', (e) => {
-  e.respondWith(
-    caches.match(e.request).then((response) => response || fetch(e.request))
+self.addEventListener('fetch', (event) => {
+  event.respondWith(
+    caches.match(event.request)
+      .then((response) => response || fetch(event.request))
   );
 });
