@@ -1,59 +1,380 @@
-/* 基本樣式建議 */
+/* ==================== 基本設定 ==================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Microsoft JhengHei", sans-serif;
+    background: #1a1a1a; /* 黑色背景 */
+    color: #e0e0e0; /* 淺色文字 */
+    min-height: 100vh;
+    padding: 20px;
+}
+
+/* ==================== 主容器 ==================== */
+.app-container {
+    max-width: 600px;
+    margin: 0 auto;
+    background: #2d2d2d; /* 深灰色容器 */
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+}
+
+/* ==================== 標題 ==================== */
+h1 {
+    text-align: center;
+    color: #4CAF50;
+    margin-bottom: 30px;
+    font-size: 2em;
+}
+
+/* ==================== 輸入區域 ==================== */
+.input-group {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* 電腦版：兩欄 */
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.input-group input {
+    padding: 12px 15px;
+    border: 2px solid #404040;
+    border-radius: 8px;
+    font-size: 1em;
+    background: #1a1a1a; /* 黑色輸入框 */
+    color: #e0e0e0; /* 淺色文字 */
+    transition: border-color 0.3s;
+}
+
+.input-group input:focus {
+    outline: none;
+    border-color: #4CAF50;
+    background: #252525;
+}
+
+.input-group input::placeholder {
+    color: #888;
+}
+
+.input-group button {
+    grid-column: 1 / -1; /* 按鈕佔滿整列 */
+    padding: 12px;
+    background: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1em;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.input-group button:hover {
+    background: #45a049;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(76, 175, 80, 0.3);
+}
+
+.input-group button:active {
+    transform: translateY(0);
+}
+
+/* 手機版：輸入欄改為上下排列 */
+@media (max-width: 768px) {
+    .input-group {
+        grid-template-columns: 1fr; /* 單欄排列 */
+        gap: 12px;
+    }
+    
+    .input-group button {
+        grid-column: 1; /* 重置按鈕欄位 */
+    }
+}
+
+/* ==================== 歷史紀錄區域 ==================== */
+.history-section {
+    margin: 30px 0;
+}
+
 .summary-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 15px 0;
-    border-bottom: 2px solid #e0e0e0;
+    border-bottom: 2px solid #404040;
     margin-bottom: 15px;
 }
 
 .summary-header h3 {
     margin: 0;
     font-size: 1.1em;
+    color: #b0b0b0;
 }
 
 .total-display {
-    color: #4CAF50;
+    color: #4CAF50 !important;
     font-weight: bold;
 }
 
 #total-amount {
-    color: #2196F3;
-}
-
-.history-section {
-    margin: 20px 0;
-    min-height: 200px;
+    color: #66BB6A;
 }
 
 #list {
     max-height: 400px;
     overflow-y: auto;
+    padding-right: 5px;
 }
 
+/* 自訂捲軸（深色主題） */
+#list::-webkit-scrollbar {
+    width: 8px;
+}
+
+#list::-webkit-scrollbar-track {
+    background: #1a1a1a;
+    border-radius: 4px;
+}
+
+#list::-webkit-scrollbar-thumb {
+    background: #404040;
+    border-radius: 4px;
+}
+
+#list::-webkit-scrollbar-thumb:hover {
+    background: #4CAF50;
+}
+
+/* ==================== 紀錄項目 ==================== */
 .record-item {
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 12px;
     margin: 8px 0;
-    background: #f9f9f9;
+    background: #1a1a1a; /* 深黑色背景 */
     border-radius: 5px;
     border-left: 3px solid #4CAF50;
+    gap: 12px;
+    transition: background 0.2s ease;
 }
 
+.record-item:hover {
+    background: #252525;
+}
+
+.record-item > div {
+    flex: 1;
+    min-width: 0;
+}
+
+.record-item span {
+    display: block;
+    color: #b0b0b0;
+    font-size: 0.95em;
+}
+
+.record-item strong {
+    display: block;
+    margin-top: 4px;
+    font-size: 1.1em;
+    color: #66BB6A;
+    font-weight: 600;
+}
+
+/* 手機版紀錄項目優化 */
+@media (max-width: 768px) {
+    .record-item {
+        padding: 10px;
+        gap: 10px;
+    }
+    
+    .record-item span {
+        font-size: 0.9em;
+    }
+    
+    .record-item strong {
+        font-size: 1.05em;
+    }
+}
+
+/* ==================== 刪除按鈕 ==================== */
 .delete-btn {
     background: #f44336;
     color: white;
     border: none;
-    padding: 6px 15px;
-    border-radius: 4px;
+    border-radius: 50%;
     cursor: pointer;
-    font-size: 0.9em;
-    transition: background 0.3s;
+    transition: all 0.3s ease;
+    
+    width: 36px;
+    height: 36px;
+    min-width: 36px;
+    min-height: 36px;
+    
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    font-size: 24px;
+    line-height: 1;
+    font-weight: 300;
+    font-family: Arial, sans-serif;
+    
+    flex-shrink: 0;
+    padding: 0;
+    margin: 0;
+    
+    -webkit-tap-highlight-color: transparent;
+    outline: none;
+    
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    user-select: none;
+    -webkit-user-select: none;
 }
 
 .delete-btn:hover {
     background: #d32f2f;
+    box-shadow: 0 3px 6px rgba(244, 67, 54, 0.4);
+    transform: scale(1.05);
 }
+
+.delete-btn:active {
+    background: #c62828;
+    transform: scale(0.95);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+/* 手機優化 */
+@media (max-width: 768px) {
+    .delete-btn {
+        width: 40px;
+        height: 40px;
+        min-width: 40px;
+        min-height: 40px;
+        font-size: 26px;
+    }
+}
+
+@media (max-width: 375px) {
+    .delete-btn {
+        width: 38px;
+        height: 38px;
+        min-width: 38px;
+        min-height: 38px;
+        font-size: 24px;
+    }
+}
+
+/* ==================== 匯出按鈕 ==================== */
+.secondary {
+    width: 100%;
+    padding: 12px;
+    background: #424242;
+    color: white;
+    border: 2px solid #4CAF50;
+    border-radius: 8px;
+    font-size: 1em;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+    margin-top: 20px;
+}
+
+.secondary:hover {
+    background: #4CAF50;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(76, 175, 80, 0.3);
+}
+
+.secondary:active {
+    transform: translateY(0);
+}
+
+/* ==================== 空狀態提示 ==================== */
+#list p {
+    color: #888;
+    text-align: center;
+    padding: 40px 20px;
+    font-style: italic;
+}
+
+/* ==================== 手機版整體優化 ==================== */
+@media (max-width: 768px) {
+    body {
+        padding: 10px;
+    }
+    
+    .app-container {
+        padding: 20px;
+        border-radius: 10px;
+    }
+    
+    h1 {
+        font-size: 1.5em;
+        margin-bottom: 20px;
+    }
+    
+    .summary-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+    }
+    
+    .summary-header h3 {
+        font-size: 1em;
+    }
+}
+
+/* ==================== 小螢幕手機 ==================== */
+@media (max-width: 375px) {
+    .app-container {
+        padding: 15px;
+    }
+    
+    h1 {
+        font-size: 1.3em;
+    }
+    
+    .input-group input,
+    .input-group button {
+        font-size: 0.95em;
+    }
+}
+```
+
+## 🎨 設計特色
+
+### 1. **黑色主題配色**
+- 背景：`#1a1a1a` (深黑)
+- 容器：`#2d2d2d` (灰黑)
+- 輸入框：`#1a1a1a` (黑色)
+- 文字：`#e0e0e0` (淺色)
+- 強調色：`#4CAF50` (綠色)
+
+### 2. **響應式佈局**
+- **電腦版**：輸入欄左右排列（兩欄）
+- **手機版 (≤768px)**：輸入欄上下排列（單欄）
+
+### 3. **視覺優化**
+- 深色捲軸
+- Hover 動畫效果
+- 陰影效果增強
+- 綠色主題點綴
+
+## 📱 效果預覽
+
+### 電腦版：
+```
+[項目輸入框] [金額輸入框]
+[     新增紀錄按鈕     ]
+```
+
+### 手機版：
+```
+[  項目輸入框  ]
+[  金額輸入框  ]
+[  新增紀錄按鈕  ]
