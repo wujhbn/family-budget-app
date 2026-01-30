@@ -147,7 +147,7 @@ function renderHistory() {
         // 建立刪除按鈕（使用事件監聽器而非內聯事件）
         const deleteBtn = document.createElement('button');
         deleteBtn.className = 'delete-btn';
-        deleteBtn.textContent = '刪除';
+        deleteBtn.textContent = '−'; // 使用減號符號
         deleteBtn.addEventListener('click', () => deleteRecord(index));
         
         recordDiv.appendChild(deleteBtn);
